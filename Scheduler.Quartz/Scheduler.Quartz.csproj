@@ -12,6 +12,7 @@
     <PackageProjectUrl>https://github.com/Valeriy1991/Scheduler.Quartz</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Valeriy1991/Scheduler.Quartz</RepositoryUrl>
     <PackageTags>Quartz.NET Scheduler ASP.NET Core .NET Standard</PackageTags>
+    <PackageVersion />
   </PropertyGroup>
   
   <ItemGroup>
