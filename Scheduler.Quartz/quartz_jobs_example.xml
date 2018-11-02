@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+
+  <processing-directives>
+    <overwrite-existing-data>true</overwrite-existing-data>
+  </processing-directives>
+
+  <schedule>
+
+    <job>
+      <name>LogJob</name>
+      <group>LogJob_Group</group>
+      <description>Job for tests - write message "Job is work" to logs</description>
+      <job-type>Scheduler.Quartz.Jobs.LogJob, Scheduler.Quartz</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+
+    <trigger>
+      <!--<simple>
+        <name>LogJob_SimpleTrigger</name>
+        <job-name>LogJob</job-name>
+        <job-group>LogJob_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        - In release 3.0.0-beta1 must required -
+        <repeat-count>-1</repeat-count>
+        - Run every 1 minute -
+        <repeat-interval>60000</repeat-interval>
+      </simple>-->
+      <cron>
+        <name>LogJob_CronTrigger</name>
+        <job-name>LogJob</job-name>
+        <job-group>LogJob_Group</job-group>
+        <misfire-instruction>DoNothing</misfire-instruction>
+        <!-- Run every 1 minute -->
+        <cron-expression>0 */1 * * * ?</cron-expression>
+      </cron>
+
+    </trigger>
+
+  </schedule>
+
+</job-scheduling-data>
