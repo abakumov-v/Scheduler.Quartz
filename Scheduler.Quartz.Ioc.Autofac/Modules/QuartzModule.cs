@@ -40,11 +40,7 @@ namespace Scheduler.Quartz.Ioc.Autofac.Modules
 
         protected Type[] GetTypes(Type targetType)
         {
-#if NET462
             return targetType.Assembly.GetTypes();
-#elif NETCOREAPP2_0
-            return targetType.Assembly.GetTypes();
-#endif
         }
     }
 }
