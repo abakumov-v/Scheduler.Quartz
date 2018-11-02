@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    <Authors>Abakumov Valeriy</Authors>
+    <Company />
+    <Product />
+    <Description>IOC job factories for Quartz.NET scheduler</Description>
+    <PackageProjectUrl>https://github.com/Valeriy1991/Scheduler.Quartz</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Valeriy1991/Scheduler.Quartz</RepositoryUrl>
+    <PackageTags>Quartz.NET Scheduler ASP.NET Core .NET Standard IOC DI DependencyInjection Autofac</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Quartz" Version="3.0.0-beta1" />
+    <PackageReference Include="Quartz.Jobs" Version="3.0.0-beta1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Scheduler.Quartz\Scheduler.Quartz.csproj" />
+  </ItemGroup>
+
+</Project>
