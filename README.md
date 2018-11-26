@@ -22,3 +22,7 @@ https://ci.appveyor.com/nuget/scheduler-quartz-47b9607klagb
 
 1. `Scheduler.Quartz` - Quartz.NET scheduler
 2. `Scheduler.Quartz.Ioc.Autofac` - dependency registration components for Autofac
+
+## How to use it?
+
+See `readme.md` inside `Scheduler.Quartz` project
