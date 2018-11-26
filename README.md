@@ -25,4 +25,4 @@ https://ci.appveyor.com/nuget/scheduler-quartz-47b9607klagb
 
 ## How to use it?
 
-See `readme.md` inside `Scheduler.Quartz` project
+See `readme` inside [Scheduler.Quartz](https://github.com/Valeriy1991/Scheduler.Quartz/tree/master/Scheduler.Quartz) project
