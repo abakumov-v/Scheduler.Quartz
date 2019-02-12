@@ -22,6 +22,11 @@ namespace NetCore.WebApi
             try
             {
                 logger.Debug("Init main");
+
+                var pathToContentRoot = AppDomain.CurrentDomain.BaseDirectory;
+                logger.Debug($"pathToContentRoot: {pathToContentRoot}");
+                Directory.SetCurrentDirectory(pathToContentRoot);
+
                 CreateWebHostBuilder(args).Build().Run();
             }
             finally

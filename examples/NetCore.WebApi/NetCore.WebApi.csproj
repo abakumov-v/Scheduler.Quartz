@@ -7,14 +7,19 @@
 
   <ItemGroup>
     <Content Remove="nlog.config" />
-    <Content Remove="quartz.config" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="nlog.config">
+    <Content Include="..\Core.Jobs\quartz_jobs.xml" Link="quartz_jobs.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Core.Jobs\quartz.config" Link="quartz.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="quartz.config">
+    <None Include="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -32,12 +37,6 @@
     <ProjectReference Include="..\Core.Ioc.Autofac\Core.Ioc.Autofac.csproj" />
     <ProjectReference Include="..\Core.Jobs\Core.Jobs.csproj" />
     <ProjectReference Include="..\Core.Models\Core.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="quartz_jobs.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

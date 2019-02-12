@@ -15,4 +15,13 @@
     <ProjectReference Include="..\..\Scheduler.Quartz\Scheduler.Quartz.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="quartz.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="quartz_jobs.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
