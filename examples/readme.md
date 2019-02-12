@@ -1,4 +1,4 @@
 ﻿# Quartz scheduler - examples
 
-1. [Console](examples/NetCore.ConsoleAsWindowsService)
-2. [ASP.NET Core Web API](/examples/NetCore.WebApi)
+1. [Console](NetCore.ConsoleAsWindowsService)
+2. [ASP.NET Core Web API](NetCore.WebApi)
