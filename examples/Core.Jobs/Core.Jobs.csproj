@@ -9,7 +9,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.3.0" />
-    <PackageReference Include="Scheduler.Quartz" Version="1.0.0-alpha8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Scheduler.Quartz\Scheduler.Quartz.csproj" />
   </ItemGroup>
 
 </Project>

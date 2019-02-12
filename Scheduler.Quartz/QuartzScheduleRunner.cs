@@ -24,7 +24,7 @@ namespace Scheduler.Quartz
 
             _logger.LogTrace("Wait to create Quartz scheduler...");
             var factory = new StdSchedulerFactory();
-            _scheduler = factory.GetScheduler().Result;
+            _scheduler = factory.GetScheduler().ConfigureAwait(false).GetAwaiter().GetResult();
 
             _logger.LogTrace("Quartz Scheduler was created successfully");
             SetJobFactory(jobFactory);
@@ -51,7 +51,6 @@ namespace Scheduler.Quartz
         public async Task Stop()
         {
             _logger.LogTrace($"Scheduler will be stopped");
-            //await _scheduler.Shutdown();
             await Stop(true);
         }
 

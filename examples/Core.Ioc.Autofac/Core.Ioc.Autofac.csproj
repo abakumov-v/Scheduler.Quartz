@@ -6,10 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="Scheduler.Quartz.Ioc" Version="1.0.0-alpha8" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Scheduler.Quartz.Ioc.Autofac\Scheduler.Quartz.Ioc.Autofac.csproj" />
     <ProjectReference Include="..\Core.Jobs\Core.Jobs.csproj" />
     <ProjectReference Include="..\Core.Models\Core.Models.csproj" />
   </ItemGroup>

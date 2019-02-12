@@ -32,7 +32,6 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.7.0" />
     <PackageReference Include="NLog.WindowsIdentity" Version="4.5.11" />
     <PackageReference Include="Quartz.Plugins" Version="3.0.6" />
-    <PackageReference Include="Scheduler.Quartz.Ioc" Version="1.0.0-alpha8" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.5.0" />
   </ItemGroup>
 
