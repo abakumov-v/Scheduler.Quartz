@@ -4,7 +4,7 @@ using Autofac;
 using Core.Models.Options;
 using Microsoft.Extensions.Options;
 
-namespace NetCore.ConsoleAsWindowsService.Application.Ioc
+namespace Core.Ioc.Autofac
 {
     [ExcludeFromCodeCoverage]
     public static class AutofacBuilderExtensions

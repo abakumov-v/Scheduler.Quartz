@@ -4,7 +4,7 @@ using Core.Jobs;
 using Quartz;
 using Scheduler.Quartz.Ioc.Autofac.Modules;
 
-namespace NetCore.ConsoleAsWindowsService.Application.Ioc
+namespace Core.Ioc.Autofac
 {
     /// <inheritdoc />
     /// <summary>

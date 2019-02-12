@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Autofac;
 
-namespace NetCore.ConsoleAsWindowsService.Application.Ioc
+namespace Core.Ioc.Autofac
 {
     [ExcludeFromCodeCoverage]
     public static class AutofacConfig
