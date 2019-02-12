@@ -18,7 +18,7 @@ namespace Core.Ioc.Autofac
             base.Load(builder);
 
             // Register all our Quartz jobs
-            builder.RegisterTypes(GetTypes(typeof(ExampleJob)))
+            builder.RegisterTypes(GetTypes(typeof(ExampleLogJob)))
                 .Where(t => t != typeof(IJob) && typeof(IJob).IsAssignableFrom(t))
                 .AsSelf()
                 .InstancePerLifetimeScope();
