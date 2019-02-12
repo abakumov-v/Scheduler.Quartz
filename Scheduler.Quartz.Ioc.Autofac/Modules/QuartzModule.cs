@@ -9,7 +9,7 @@ namespace Scheduler.Quartz.Ioc.Autofac.Modules
 {
     /// <inheritdoc />
     /// <summary>
-    /// Autofac dependecy registering module for Quartz schedule runner
+    /// Autofac dependency registering module for Quartz schedule runner
     /// </summary>
     public class QuartzModule : Module
     {
