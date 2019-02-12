@@ -16,11 +16,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler.Quartz.Ioc.Autofa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{8C7888FD-0CDC-4CC0-9CE4-FE75D2483C53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore.Console", "examples\NetCore.Console\NetCore.Console.csproj", "{D7BF2E19-07F3-4F8E-A570-B420CE12DE0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore.Console", "examples\NetCore.Console\NetCore.Console.csproj", "{D7BF2E19-07F3-4F8E-A570-B420CE12DE0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore.ConsoleAsWindowsService", "examples\NetCore.ConsoleAsWindowsService\NetCore.ConsoleAsWindowsService.csproj", "{54A89462-18A9-45E1-8A6E-70A8EFE74FD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore.ConsoleAsWindowsService", "examples\NetCore.ConsoleAsWindowsService\NetCore.ConsoleAsWindowsService.csproj", "{54A89462-18A9-45E1-8A6E-70A8EFE74FD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.WebApi", "examples\AspNetCore.WebApi\AspNetCore.WebApi.csproj", "{1BE24994-9CBE-443E-8D06-E98975DD684C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.WebApi", "examples\AspNetCore.WebApi\AspNetCore.WebApi.csproj", "{1BE24994-9CBE-443E-8D06-E98975DD684C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
