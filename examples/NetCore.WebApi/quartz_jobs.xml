@@ -34,7 +34,7 @@
         <job-name>ExampleJob</job-name>
         <job-group>ExampleJob_Group</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
-        <cron-expression>0 0/2 * * * ?</cron-expression>
+        <cron-expression>0 0/1 * * * ?</cron-expression>
       </cron>
 
     </trigger>
