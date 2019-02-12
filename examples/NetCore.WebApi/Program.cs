@@ -25,6 +25,7 @@ namespace NetCore.WebApi
 
                 var pathToContentRoot = AppDomain.CurrentDomain.BaseDirectory;
                 logger.Debug($"pathToContentRoot: {pathToContentRoot}");
+                // We need do this, so that Quartz.NET can find "quart.config" and "quartz_jobs.xml" files
                 Directory.SetCurrentDirectory(pathToContentRoot);
 
                 CreateWebHostBuilder(args).Build().Run();
