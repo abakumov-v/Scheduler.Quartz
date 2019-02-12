@@ -15,6 +15,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler.Quartz.Ioc.Autofac", "Scheduler.Quartz.Ioc.Autofac\Scheduler.Quartz.Ioc.Autofac.csproj", "{035D88D2-C487-43E2-868A-05BA00B66FA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{8C7888FD-0CDC-4CC0-9CE4-FE75D2483C53}"
+	ProjectSection(SolutionItems) = preProject
+		examples\readme.md = examples\readme.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore.ConsoleAsWindowsService", "examples\NetCore.ConsoleAsWindowsService\NetCore.ConsoleAsWindowsService.csproj", "{54A89462-18A9-45E1-8A6E-70A8EFE74FD6}"
 EndProject
@@ -24,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Models.Tests", "exampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Jobs", "examples\Core.Jobs\Core.Jobs.csproj", "{94966365-D4A8-46E8-B3ED-8341180A8942}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore.WebApi", "examples\NetCore.WebApi\NetCore.WebApi.csproj", "{EB269794-271C-4AB5-8F6B-4815C2921E48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore.WebApi", "examples\NetCore.WebApi\NetCore.WebApi.csproj", "{EB269794-271C-4AB5-8F6B-4815C2921E48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Ioc.Autofac", "examples\Core.Ioc.Autofac\Core.Ioc.Autofac.csproj", "{2ABCFE39-ED02-4B0D-B5BB-5F289DE9921D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Ioc.Autofac", "examples\Core.Ioc.Autofac\Core.Ioc.Autofac.csproj", "{2ABCFE39-ED02-4B0D-B5BB-5F289DE9921D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
