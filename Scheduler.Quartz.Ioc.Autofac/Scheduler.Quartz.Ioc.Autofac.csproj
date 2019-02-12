@@ -8,7 +8,7 @@
     <Authors>Abakumov Valeriy</Authors>
     <Company />
     <Product />
-    <Description>IOC job factories for Quartz.NET scheduler</Description>
+    <Description>Scheduler Quartz.NET for .NET Standard 2.0 - Autofac job factory and module</Description>
     <PackageProjectUrl>https://github.com/Valeriy1991/Scheduler.Quartz</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Valeriy1991/Scheduler.Quartz</RepositoryUrl>
     <PackageTags>Quartz.NET Scheduler ASP.NET Core .NET Standard IOC DI DependencyInjection Autofac</PackageTags>

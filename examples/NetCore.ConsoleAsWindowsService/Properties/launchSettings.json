@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NetCore.ConsoleAsWindowsService": {
+      "commandName": "Project",
+      "commandLineArgs": "--start=true"
+    }
+  }
+}

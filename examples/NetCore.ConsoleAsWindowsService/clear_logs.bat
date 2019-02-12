@@ -1,0 +1,1 @@
+del /S /Q "C:\Temp\nlog\Scheduler.Quartz_Example_NetCore.ConsoleAsWindowsService"

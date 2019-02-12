@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+
+  <processing-directives>
+    <overwrite-existing-data>true</overwrite-existing-data>
+  </processing-directives>
+
+  <schedule>
+
+    <!--ExampleLogJob-->
+    <job>
+      <name>ExampleLogJob</name>
+      <group>ExampleLogJob_Group</group>
+      <description>Some example job</description>
+      <job-type>Core.Jobs.ExampleLogJob, Core.Jobs</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <!-- Run 1 time -->
+      <simple>
+        <name>ExampleLogJob_CronTrigger</name>
+        <job-name>ExampleLogJob</job-name>
+        <job-group>ExampleLogJob_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>0</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+      <!-- Run on schedule - every 2 minutes -->
+      <!-- https://www.freeformatter.com/cron-expression-generator-quartz.html -->
+      <!--<cron>
+        <name>ExampleLogJob_CronTrigger</name>
+        <job-name>ExampleLogJob</job-name>
+        <job-group>ExampleLogJob_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <cron-expression>0 0/2 * * * ?</cron-expression>
+      </cron>-->
+    </trigger>
+
+    <!--ExampleLogJobAsync-->
+    <job>
+      <name>ExampleLogJobAsync</name>
+      <group>ExampleLogJobAsync_Group</group>
+      <description>Some example async job</description>
+      <job-type>Core.Jobs.ExampleLogJobAsync, Core.Jobs</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <!-- Run 1 time -->
+      <simple>
+        <name>ExampleLogJobAsync_CronTrigger</name>
+        <job-name>ExampleLogJobAsync</job-name>
+        <job-group>ExampleLogJobAsync_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>0</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+      <!-- Run on schedule - every 2 minutes -->
+      <!-- https://www.freeformatter.com/cron-expression-generator-quartz.html -->
+      <!--<cron>
+        <name>ExampleLogJobAsync_CronTrigger</name>
+        <job-name>ExampleLogJobAsync</job-name>
+        <job-group>ExampleLogJobAsync_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <cron-expression>0 0/2 * * * ?</cron-expression>
+      </cron>-->
+    </trigger>
+
+    <!--LongRunningJob-->
+    <job>
+      <name>LongRunningJob</name>
+      <group>LongRunningJob_Group</group>
+      <description>Some example async job</description>
+      <job-type>Core.Jobs.LongRunningJob, Core.Jobs</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <!-- Run 1 time -->
+      <simple>
+        <name>LongRunningJob_CronTrigger</name>
+        <job-name>LongRunningJob</job-name>
+        <job-group>LongRunningJob_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>0</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+      <!-- Run on schedule - every 2 minutes -->
+      <!-- https://www.freeformatter.com/cron-expression-generator-quartz.html -->
+      <!--<cron>
+        <name>LongRunningJob_CronTrigger</name>
+        <job-name>LongRunningJob</job-name>
+        <job-group>LongRunningJob_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <cron-expression>0 0/2 * * * ?</cron-expression>
+      </cron>-->
+    </trigger>
+
+    <!--LongRunningJobAsync-->
+    <job>
+      <name>LongRunningJobAsync</name>
+      <group>LongRunningJobAsync_Group</group>
+      <description>Some example async job</description>
+      <job-type>Core.Jobs.LongRunningJobAsync, Core.Jobs</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <!-- Run 1 time -->
+      <simple>
+        <name>LongRunningJobAsync_CronTrigger</name>
+        <job-name>LongRunningJobAsync</job-name>
+        <job-group>LongRunningJobAsync_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>0</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+      <!-- Run on schedule - every 2 minutes -->
+      <!-- https://www.freeformatter.com/cron-expression-generator-quartz.html -->
+      <!--<cron>
+        <name>LongRunningJobAsync_CronTrigger</name>
+        <job-name>LongRunningJobAsync</job-name>
+        <job-group>LongRunningJobAsync_Group</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <cron-expression>0 0/2 * * * ?</cron-expression>
+      </cron>-->
+    </trigger>
+
+
+  </schedule>
+
+</job-scheduling-data>
