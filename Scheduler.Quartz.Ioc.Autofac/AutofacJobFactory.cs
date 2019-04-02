@@ -35,10 +35,10 @@ namespace Scheduler.Quartz.Ioc.Autofac
 
                 return (IJob)job;
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                var message = $"Problem instantiating class {(jobType != null ? jobType.Name : "UNKNOWN")}";
-                throw new SchedulerException(message, exception);
+                var message = $"Problem instantiating class {(jobType != null ? jobType.Name : "UNKNOWN")} because: {ex.Message}";
+                throw new SchedulerException(message, ex);
             }
         }
 
