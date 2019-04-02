@@ -8,4 +8,4 @@ ASP.NET Core Web API application for Quartz.NET scheduler.
 2. Build 
 3. Change launch mode from `IIS Express` to Kestrel (`NetCore.WebApi`)
 4. Run
-9. See logs in Console output and also in `C:\temp\nlog\Scheduler.Quartz_Example_NetCore.WebApi\` - the `ExampleJob` will be executed according to the schedule from `quartz_jobs.xml`
+9. See logs in Console output and also in `C:\temp\nlog\Scheduler.Quartz_Example_NetCore.WebApi\` - the `ExampleLogJob`, `ExampleLogJobAsync`, `LongRunningJob` and `LongRunningJobAsync` will be executed according to schedule settings from `quartz_jobs.xml`

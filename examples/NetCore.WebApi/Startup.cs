@@ -59,8 +59,7 @@ namespace NetCore.WebApi
 
             app.UseMvc();
 
-
-            // Настройка чтения строки подключения из appsettings.json
+            // Take connection string for database from appsettings.json
             var logDb = Configuration.GetSection("ConnectionStrings:LogDb").Value;
             LogManager.Configuration.Variables["connectionString"] = logDb;
 
