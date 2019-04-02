@@ -7,6 +7,7 @@ Package|Last version
 -|-
 Scheduler.Quartz|[![NuGet Pre Release](https://img.shields.io/nuget/vpre/Scheduler.Quartz.svg)](https://www.nuget.org/packages/Scheduler.Quartz/)
 Scheduler.Quartz.Ioc.Autofac|[![NuGet Pre Release](https://img.shields.io/nuget/vpre/Scheduler.Quartz.Ioc.Autofac.svg)](https://www.nuget.org/packages/Scheduler.Quartz.Ioc.Autofac/)
+Scheduler.Quartz.Ioc.ServiceProvider|[![NuGet Pre Release](https://img.shields.io/nuget/vpre/Scheduler.Quartz.Ioc.ServiceProvider.svg)](https://www.nuget.org/packages/Scheduler.Quartz.Ioc.ServiceProvider/)
 
 ## Builds
 
@@ -20,8 +21,9 @@ https://ci.appveyor.com/nuget/scheduler-quartz-47b9607klagb
 
 ## Include packages:
 
-1. `Scheduler.Quartz` - Quartz.NET scheduler
-2. `Scheduler.Quartz.Ioc.Autofac` - dependency registration components for Autofac
+1. `Scheduler.Quartz` - Quartz.NET scheduler;
+2. `Scheduler.Quartz.Ioc.Autofac` - dependency registration components for Autofac;
+2. `Scheduler.Quartz.Ioc.ServiceProvider` - dependency registration components for ServiceProvider (.NET Core built-in Ioc container).
 
 ## How to use it?
 
