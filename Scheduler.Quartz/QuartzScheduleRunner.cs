@@ -105,13 +105,13 @@ namespace Scheduler.Quartz
 
         public async Task RunJob<T>(int intervalInSeconds, bool isNeedRepeatForever = true) where T : IConfigurableJob
         {
-            var jobIndetity = typeof(T).Name;
+            var jobIdentity = typeof(T).Name;
             var jobDetail = JobBuilder.Create(typeof(T))
-                .WithIdentity($"{jobIndetity}_Name", typeof(T).Name)
+                .WithIdentity($"{jobIdentity}_Name", typeof(T).Name)
                 .Build();
 
             var trigger = TriggerBuilder.Create()
-                .WithIdentity($"{jobIndetity}_Trigger", typeof(T).Name)
+                .WithIdentity($"{jobIdentity}_Trigger", typeof(T).Name)
                 //.StartAt(startTime)
                 .StartNow()
                 .WithSimpleSchedule(t =>
