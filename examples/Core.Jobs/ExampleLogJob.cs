@@ -18,13 +18,11 @@ namespace Core.Jobs
 
         public Task Execute(IJobExecutionContext context)
         {
-            return Task.Run(() =>
-            {
-                var jobId = context.FireInstanceId;
-                var jobName = context.JobDetail.Key.Name;
+            var jobId = context.FireInstanceId;
+            var jobName = context.JobDetail.Key.Name;
+            _logger.LogInformation($"[{jobId}] {jobName} - job is work");
 
-                _logger.LogInformation($"[{jobId}] {jobName} - job is work");
-            });
+            return Task.CompletedTask;
         }
     }
 }
