@@ -44,28 +44,28 @@ namespace Scheduler.Quartz
             _logger.LogTrace($"Scheduler will be started...");
             if (!_scheduler.IsStarted)
             {
-                await _scheduler.Start();
+                await _scheduler.Start().ConfigureAwait(false);
             }
         }
 
         public async Task Stop()
         {
             _logger.LogTrace($"Scheduler will be stopped");
-            await Stop(true);
+            await Stop(true).ConfigureAwait(false);
         }
 
         public async Task Stop(bool isNeedWaitForJobsToComplete)
         {
             if (_scheduler.IsStarted)
             {
-                await _scheduler.Shutdown(isNeedWaitForJobsToComplete);
+                await _scheduler.Shutdown(isNeedWaitForJobsToComplete).ConfigureAwait(false);
             }
         }
 
         public async Task StartJob(IJobDetail jobDetail, ITrigger trigger)
         {
             _logger.LogTrace($"Scheduler will be start job \"{jobDetail.Key}\" with its trigger \"{trigger.Key}\"");
-            await _scheduler.ScheduleJob(jobDetail, trigger);
+            await _scheduler.ScheduleJob(jobDetail, trigger).ConfigureAwait(false);
         }
         /*
         public Task AddJob(IJobDetail jobDetail, ITrigger trigger, bool isNeedReplace)
@@ -125,7 +125,7 @@ namespace Scheduler.Quartz
                 })
                 .Build();
 
-            await StartJob(jobDetail, trigger);
+            await StartJob(jobDetail, trigger).ConfigureAwait(false);
         }
     }
 }
