@@ -1,19 +1,12 @@
 ﻿# Quartz scheduler
 
-Extensions for IOC-containers.
-
-Supporting:
-
-* Autofac
-* ... 
+Extensions for Autofac for registering Scheduler.Quartz dependencies.
 
 ---
 
 ## How to use
 
-### Autofac
-
-1. Package already have Autofac-module named `QuartzModule` that register all required
+1. Package already has Autofac-module named `QuartzModule` that register all required
 dependecies (such as `IScheduleRunner`, `IJobFactory` and `IJob`).
 2. If you need a register some custom your jobs, create your own Autofac `Module`
 and inherit it from `QuartzModule`, for example:

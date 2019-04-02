@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Autofac;
-using Core.Ioc.Autofac;
+using Core.Jobs;
 using Core.Models.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NLog;
+using Quartz;
 using Scheduler.Quartz;
+using Scheduler.Quartz.Ioc.ServiceProvider;
 
-namespace NetCore.WebApi
+namespace NetCore.WebApi.ServiceProvider
 {
     public class Startup
     {
@@ -25,7 +27,7 @@ namespace NetCore.WebApi
         {
             _logger.Trace($"EnvironmentName is: {env.EnvironmentName}");
             _logger.Trace($"ContentRootPath is: {env.ContentRootPath}");
-            
+
             Configuration = configuration;
         }
 
@@ -35,18 +37,18 @@ namespace NetCore.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-        }
 
-        // ConfigureContainer is where you can register things directly
-        // with Autofac. This runs after ConfigureServices so the things
-        // here will override registrations made in ConfigureServices.
-        // Don't build the container; that gets done for you. If you
-        // need a reference to the container, you need to use the
-        // "Without ConfigureContainer" mechanism shown later.
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterApplicationDependencies();
+            services.AddQuartzScheduler();
+            // Use Scrutor for scan dependencies
+            services.Scan(scan => scan
+                // Register all own custom jobs
+                .FromAssemblyOf<ExampleLogJob>()
+                .AddClasses(classes => classes.AssignableTo<IJob>())
+                .AsSelf()
+                .WithTransientLifetime()
+            );
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +58,13 @@ namespace NetCore.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
+            app.UseHttpsRedirection();
             app.UseMvc();
 
             // Take connection string for database from appsettings.json

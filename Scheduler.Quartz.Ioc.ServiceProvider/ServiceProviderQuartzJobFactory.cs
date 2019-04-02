@@ -1,27 +1,25 @@
 ﻿using System;
-using Autofac;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using Quartz.Spi;
 
-namespace Scheduler.Quartz.Ioc.Autofac
+namespace Scheduler.Quartz.Ioc.ServiceProvider
 {
-    public class AutofacJobFactory : IJobFactory
+    public class ServiceProviderQuartzJobFactory : IJobFactory
     {
-        private readonly ILifetimeScope _lifetimeScope;
         private readonly ILogger _logger;
+        private readonly IServiceProvider _serviceProvider;
 
-        public AutofacJobFactory(ILifetimeScope lifetimeScope, ILogger<AutofacJobFactory> logger)
+        public ServiceProviderQuartzJobFactory(ILogger<ServiceProviderQuartzJobFactory> logger,
+            IServiceProvider serviceProvider)
         {
-            if (lifetimeScope == null)
-                throw new ArgumentNullException(nameof(lifetimeScope));
-            _lifetimeScope = lifetimeScope;
-
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
             _logger = logger;
+            _serviceProvider = serviceProvider;
         }
+
         // source: http://tech.trailmax.info/2013/07/quartz-net-in-azure-with-autofac-smoothness/
+        // Just instead Autofac we use .NET Core Ioc container
         public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
         {
             Type jobType = null;
@@ -31,13 +29,14 @@ namespace Scheduler.Quartz.Ioc.Autofac
                 jobType = jobDetail.JobType;
 
                 // resolve job object from DI - populate all services and repositories
-                var job = _lifetimeScope.Resolve(jobType);
+                var job = _serviceProvider.GetRequiredService(jobType);
 
-                return (IJob)job;
+                return (IJob) job;
             }
             catch (Exception ex)
             {
-                var message = $"Problem instantiating class {(jobType != null ? jobType.Name : "UNKNOWN")} because: {ex.Message}";
+                var message =
+                    $"Problem instantiating class {(jobType != null ? jobType.Name : "UNKNOWN")} because: {ex.Message}";
                 throw new SchedulerException(message, ex);
             }
         }
