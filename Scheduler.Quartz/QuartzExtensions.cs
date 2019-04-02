@@ -18,7 +18,7 @@ namespace Scheduler.Quartz
             // so we don't need null-checking 
             var scheduler = serviceProvider.GetRequiredService<IScheduleRunner>();
             // Waiting synchronously because it is called only in 1 place - Startup.cs
-            scheduler.Start().Wait();
+            scheduler.Start().GetAwaiter().GetResult();
         }
     }
 }
