@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Ioc.Autofac", "example
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Quartz.Ioc.ServiceProvider", "Scheduler.Quartz.Ioc.ServiceProvider\Scheduler.Quartz.Ioc.ServiceProvider.csproj", "{2CC849D3-4317-4D00-9379-43261212FFE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore.WebApi.ServiceProvider", "examples\NetCore.WebApi.ServiceProvider\NetCore.WebApi.ServiceProvider.csproj", "{BDD45856-AAC4-4DA1-B6EC-7D09BC7E3F86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{2CC849D3-4317-4D00-9379-43261212FFE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CC849D3-4317-4D00-9379-43261212FFE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CC849D3-4317-4D00-9379-43261212FFE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDD45856-AAC4-4DA1-B6EC-7D09BC7E3F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDD45856-AAC4-4DA1-B6EC-7D09BC7E3F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDD45856-AAC4-4DA1-B6EC-7D09BC7E3F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDD45856-AAC4-4DA1-B6EC-7D09BC7E3F86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{94966365-D4A8-46E8-B3ED-8341180A8942} = {8C7888FD-0CDC-4CC0-9CE4-FE75D2483C53}
 		{EB269794-271C-4AB5-8F6B-4815C2921E48} = {8C7888FD-0CDC-4CC0-9CE4-FE75D2483C53}
 		{2ABCFE39-ED02-4B0D-B5BB-5F289DE9921D} = {8C7888FD-0CDC-4CC0-9CE4-FE75D2483C53}
+		{BDD45856-AAC4-4DA1-B6EC-7D09BC7E3F86} = {8C7888FD-0CDC-4CC0-9CE4-FE75D2483C53}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {59BEB306-F20F-4CE4-A5EC-908A9AAA11FB}
