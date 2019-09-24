@@ -7,12 +7,12 @@ namespace Scheduler.Quartz.Abstract
 {
     public interface IScheduleRunner
     {
-        void SetJobFactory(IJobFactory jobFactory);
+        //void SetJobFactory(IJobFactory jobFactory);
         Task Start();
-        Task Stop();
-        Task Stop(bool isNeedWaitForJobsToComplete);
-        Task StartJob(IJobDetail jobDetail, ITrigger trigger);
-        void Config(IDictionary<IJobDetail, ITrigger> jobs);
-        Task RunJob<T>(int intervalInSeconds, bool isNeedRepeatForever = true) where T : IConfigurableJob;
+        Task Stop(bool needWaitForJobsToComplete = true);
+        Task ScheduleJob(IJobDetail jobDetail, ITrigger trigger);
+        //void Config(IDictionary<IJobDetail, ITrigger> jobs);
+        Task ScheduleRepeatableJob<T>(int intervalInSeconds, bool isNeedRepeatForever = true,
+            bool needStartNow = true) where T : IJob;
     }
 }

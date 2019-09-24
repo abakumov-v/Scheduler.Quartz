@@ -37,16 +37,11 @@ namespace NetCore.WebApi.ServiceProvider
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration);
-
-            services.AddQuartzScheduler();
-            // Use Scrutor for scan dependencies
-            services.Scan(scan => scan
-                // Register all own custom jobs
-                .FromAssemblyOf<ExampleLogJob>()
-                .AddClasses(classes => classes.AssignableTo<IJob>())
-                .AsSelf()
-                .WithTransientLifetime()
-            );
+            services.AddQuartz(new QuartzSchedulerOptions()
+            {
+                ConfigSource = ConfigSource.File,
+                OneOfCustomQuartzJobsType = typeof(ExampleLogJob)
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
