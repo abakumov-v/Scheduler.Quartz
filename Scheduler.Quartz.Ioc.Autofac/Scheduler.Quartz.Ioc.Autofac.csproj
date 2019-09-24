@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
@@ -9,8 +9,8 @@
     <Company />
     <Product />
     <Description>Scheduler Quartz.NET for .NET Standard 2.0 - Autofac job factory and module</Description>
-    <PackageProjectUrl>https://github.com/Valeriy1991/Scheduler.Quartz</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Valeriy1991/Scheduler.Quartz</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/abakumov-v/Scheduler.Quartz</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/abakumov-v/Scheduler.Quartz</RepositoryUrl>
     <PackageTags>Quartz.NET Scheduler ASP.NET Core .NET Standard IOC DI DependencyInjection Autofac</PackageTags>
     <PackageVersion />
   </PropertyGroup>

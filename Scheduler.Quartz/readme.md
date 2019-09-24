@@ -4,97 +4,87 @@ Quartz.NET scheduler
 
 ## How to use
 
-**Important**: currenty only `Autofac` as IoC-container supported.
-
 ### 1. Create project with Quartz jobs
 
-1. Create class library project which will contains all needed Quartz jobs
-2. Install package `Scheduler.Quartz`
-3. Create Quartz Job - for example, `ExampleJob` 
-4. Inherit from abstract class `LoggableJob` (from `Scheduler.Quartz.Abstract` namespace) and implement it
+1. Create class library project which will contains all needed Quartz jobs.
+2. Install package `Scheduler.Quartz`.
+2. Create your custom Quartz jobs (for example, `ExampleJob`).
+2. Inherit this job:
+    1. from abstract class `LoggableJob` or `LoggableJobAsync` from `Scheduler.Quartz.Abstract` namespace;
+    1. or just from `IJob` interface of `Quartz` namespace.
+2. Implement logic of job.
 
-### 2. ASP.NET Core
+### 2. Add Quartz scheduler to .NET Core app (GenericHost/WebHost)
 
-1. Install Autofac
+1. Install appropriate IOC-container - all possible IOC-container are listed [here](../readme.md)
 2. Install packages:
-    1. `Quartz.Plugings`
-    2. `Scheduler.Quartz`
-3. In your `Startup` class:
-    1. Add using for `Scheduler.Quartz`:
-    2. Then add this method to `Configure` method in `Startup` class:
-        ```csharp
-        app.StartQuartzScheduler();
-        ```
-    3. That is all.
-
-P.S. For Quartz.NET you may need file `quartz.config` and `*.xml` file with 
-jobs settings - you can see `quartz_example.config` and 
-`quartz_jobs_example.xml`.
-
-### 3. Console .NET Core as Windows Service
-
-1. Install Autofac
-2. Make your .NET Core 2.x application as Windows Service:
-    1. Steve Gordon: "[Running a .NET Core Generic Host App as a Windows Service](https://www.stevejgordon.co.uk/running-net-core-generic-host-applications-as-a-windows-service)"
-    2. [GenericHost](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-2.1)
-3. For using scheduled jobs create class that implements `IHostedService` and inject `IScheduleRunner` instance to constructor of this class - for example:
-   ```csharp
-    public class RunScheduledOperationHostedService : IHostedService, IDisposable
+    1. `Scheduler.Quartz`
+    2. `Quartz.Plugings` - only if your Quartz configured from *.xml file ("file configured scheduler")
+2. In your `Startup` class add the Quartz scheduler:
+    ```csharp
+    public void ConfigureServices(IServiceCollection services)
     {
-        private readonly ILogger _logger;
-        private readonly IScheduleRunner _scheduleRunner;
+        // ...
 
-        public RunScheduledOperationHostedService(
-            ILogger<RunScheduledOperationHostedService> logger,
-            IScheduleRunner scheduleRunner
-            )
+        services.AddQuartz(new QuartzSchedulerOptions()
         {
-            _logger = logger;
-            _scheduleRunner = scheduleRunner;
+            // For file configured scheduler:
+            UseFileConfig = true,
+            
+            // For in memory configured Quartz scheduler specify type of implementation of ISchedulerRunnerFactory:
+            // InMemorySchedulerFactoryType = typeof(MemorySchedulerFactory),
+
+            // Specify type of your 1 custom Qartz job for automatically
+            // registering all jobs from type's assembly. 
+            // Otherwise you need register your custom jobs manually.
+            OneOfCustomQuartzJobsType = typeof(ExampleLogJob)
+        });
+    }
+    ```
+2. Create implementation of `IHostedService` (read more about hosted services on [MS docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host)) and inject the `ISchedulerRunnerFactory` to constructor - for example:
+    ```csharp
+    public class QuartzSchedulerHostedService : IHostedService
+    {
+        private readonly IScheduleRunner _scheduler;
+
+        public QuartzSchedulerHostedService(ISchedulerRunnerFactory schedulerRunnerFactory)
+        {
+            _scheduler = schedulerRunnerFactory.Create();
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogDebug("Starting scheduler");
-            await _scheduleRunner.Start();
+            // You can configure Quartz memory-jobs here:
+            // await _scheduler.ScheduleRepeatableJob<ExampleLogJobAsync>(60);
+
+            await _scheduler.Start();
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
+        public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogDebug("Stopping scheduler...");
-            await _scheduleRunner.Stop(true);
-            _logger.LogDebug("Stopping service");
-        }
-
-        public void Dispose()
-        {
-            
+            return _scheduler.Stop();
         }
     }
-   ```
-6. For more info see [examples](../examples)
+    ```
+2. Configure this hosted service in your `GenericHost` (or `WebHost`) in `Program.cs`:
+    ```csharp
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args) => 
+        WebHost.CreateDefaultBuilder(args)
+            .UseStartup<Startup>()
+            // some configurations of .NET Core Host
+            .ConfigureServices((context, services) =>
+            {            
+                services.AddSingleton<IHostedService, QuartzSchedulerHostedService>();
+            })
+            // some other configurations
+            ;
+    ```
+2. That is all - when the .NET Core host will be start then all implementations of `IHostedService` will be start too.
 
-## Notes
+P.S. For configuring Quartz via config files you may need next files:
+* `quartz.config` with settings of Quartz scheduler;
+* `*.xml` file with jobs settings - you can see `quartz_example.config` and `quartz_jobs_example.xml`.
 
-Method `StartQuartzScheduler` will immediatelly launch Quartz.NET scheduler.
+### Examples
 
-For catch any exceptions when trying launch Quartz.NET scheduler wrap your
-code in `Configure` method by `try-catch`:
-```csharp
-public void Configure(IApplicationBuilder app)
-{
-    try
-    {
-        // ...
-        
-        app.StartQuartzScheduler();
-
-        // ...
-    }
-    catch (Exception ex)
-    {
-        _logger.LogCritical(ex, "An unexpected error has occurred");
-        throw;
-    }
-}
-```
+See inside [examples](../examples) folder.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -16,57 +17,58 @@ namespace Scheduler.Quartz
         private readonly IScheduler _scheduler;
         private readonly Dictionary<IJobDetail, ITrigger> _jobsWithTriggers = new Dictionary<IJobDetail, ITrigger>();
 
-        public QuartzScheduleRunner(ILogger<QuartzScheduleRunner> logger, IJobFactory jobFactory)
+        public QuartzScheduleRunner(ILogger<QuartzScheduleRunner> logger, IJobFactory jobFactory,
+            NameValueCollection schedulerProps = null)
         {
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger));
             _logger = logger;
 
-            _logger.LogTrace("Wait to create Quartz scheduler...");
-            var factory = new StdSchedulerFactory();
+            _logger.LogDebug("Wait to create Quartz scheduler...");
+
+            ISchedulerFactory factory = schedulerProps != null
+                ? new StdSchedulerFactory(schedulerProps)
+                : new StdSchedulerFactory();
+
             _scheduler = factory.GetScheduler().ConfigureAwait(false).GetAwaiter().GetResult();
 
-            _logger.LogTrace("Quartz Scheduler was created successfully");
+            _logger.LogDebug("Quartz Scheduler was created successfully");
             SetJobFactory(jobFactory);
         }
 
-        public void SetJobFactory(IJobFactory jobFactory)
+        internal void SetJobFactory(IJobFactory jobFactory)
         {
             if (jobFactory != null && _scheduler != null)
             {
                 _scheduler.JobFactory = jobFactory;
-                _logger.LogTrace($"Set the \"{jobFactory.GetType()}\" job factory for scheduler");
+                _logger.LogDebug($"Set the \"{jobFactory.GetType()}\" job factory for scheduler");
             }
         }
 
         public async Task Start()
         {
-            _logger.LogTrace($"Scheduler will be started...");
+            _logger.LogDebug("Scheduler will be started...");
             if (!_scheduler.IsStarted)
             {
                 await _scheduler.Start().ConfigureAwait(false);
             }
         }
-
-        public async Task Stop()
+        
+        public async Task Stop(bool needWaitForJobsToComplete = true)
         {
-            _logger.LogTrace($"Scheduler will be stopped");
-            await Stop(true).ConfigureAwait(false);
-        }
-
-        public async Task Stop(bool isNeedWaitForJobsToComplete)
-        {
+            _logger.LogDebug("Scheduler will be stopped");
             if (_scheduler.IsStarted)
             {
-                await _scheduler.Shutdown(isNeedWaitForJobsToComplete).ConfigureAwait(false);
+                await _scheduler.Shutdown(needWaitForJobsToComplete).ConfigureAwait(false);
             }
         }
 
-        public async Task StartJob(IJobDetail jobDetail, ITrigger trigger)
+        public async Task ScheduleJob(IJobDetail jobDetail, ITrigger trigger)
         {
-            _logger.LogTrace($"Scheduler will be start job \"{jobDetail.Key}\" with its trigger \"{trigger.Key}\"");
+            _logger.LogDebug($"Scheduler will be start job \"{jobDetail.Key}\" with its trigger \"{trigger.Key}\"");
             await _scheduler.ScheduleJob(jobDetail, trigger).ConfigureAwait(false);
         }
+
         /*
         public Task AddJob(IJobDetail jobDetail, ITrigger trigger, bool isNeedReplace)
         {
@@ -84,13 +86,14 @@ namespace Scheduler.Quartz
         }
         */
 
-        public void Config(IDictionary<IJobDetail, ITrigger> jobs)
+        internal void Config(IDictionary<IJobDetail, ITrigger> jobs)
         {
             foreach (var item in jobs)
             {
                 _jobsWithTriggers.Add(item.Key, item.Value);
             }
         }
+
         /*
         public void RunJobs()
         {
@@ -103,29 +106,34 @@ namespace Scheduler.Quartz
         }
         */
 
-        public async Task RunJob<T>(int intervalInSeconds, bool isNeedRepeatForever = true) where T : IConfigurableJob
+        public async Task ScheduleRepeatableJob<T>(int intervalInSeconds, bool isRepeatForever = true,
+            bool needStartNow = true) where T : IJob
         {
             var jobIdentity = typeof(T).Name;
             var jobDetail = JobBuilder.Create(typeof(T))
                 .WithIdentity($"{jobIdentity}_Name", typeof(T).Name)
                 .Build();
 
-            var trigger = TriggerBuilder.Create()
+            var triggerBuilder = TriggerBuilder.Create()
                 .WithIdentity($"{jobIdentity}_Trigger", typeof(T).Name)
                 //.StartAt(startTime)
-                .StartNow()
                 .WithSimpleSchedule(t =>
                 {
-                    if (isNeedRepeatForever)
+                    if (isRepeatForever)
                     {
                         t.WithIntervalInSeconds(intervalInSeconds).RepeatForever();
                     }
                     else
                         t.WithIntervalInSeconds(intervalInSeconds);
-                })
-                .Build();
+                });
+            if (needStartNow)
+            {
+                triggerBuilder.StartNow();
+            }
 
-            await StartJob(jobDetail, trigger).ConfigureAwait(false);
+            var trigger = triggerBuilder.Build();
+
+            await ScheduleJob(jobDetail, trigger).ConfigureAwait(false);
         }
     }
 }
