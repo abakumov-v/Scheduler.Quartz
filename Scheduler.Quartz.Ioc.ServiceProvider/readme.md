@@ -2,7 +2,6 @@
 
 Extensions for .NET Core built-in IOC-container (ServiceProvider) for registering Scheduler.Quartz dependencies.
 
----
 
 ## How to use
 
@@ -24,9 +23,10 @@ Extensions for .NET Core built-in IOC-container (ServiceProvider) for registerin
             .UseStartup<Startup>()
             .ConfigureServices((context, services) =>
             {
+                // Use built-in simple hosted service which only starts the Quartz scheduler
                 services.AddSingleton<IHostedService, QuartzSchedulerHostedService>();
                 // Or you can write another IHostedService with your custom logic and register it
-                services.AddSingleton<IHostedService, MyCustomQuartzSchedulerHostedService>();
+                // services.AddSingleton<IHostedService, MyCustomQuartzSchedulerHostedService>();
             })
             // ... other configurations ...
             ;
