@@ -1,6 +1,6 @@
 ﻿CHANGELOG:
 
-### 1.0.2
+### 1.1.0-alpha
 
 #### 1. Scheduler.Quartz
 
