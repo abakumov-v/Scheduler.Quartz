@@ -28,8 +28,9 @@ Quartz.NET scheduler
 
         services.AddQuartz(new QuartzSchedulerOptions()
         {
-            // For file configured scheduler:
-            UseFileConfig = true,
+            ConfigSource = ConfigSource.File,
+            // Or            
+            // ConfigSource = ConfigSource.InMemory,
             
             // For in memory configured Quartz scheduler specify type of implementation of ISchedulerRunnerFactory:
             // InMemorySchedulerFactoryType = typeof(MemorySchedulerFactory),
