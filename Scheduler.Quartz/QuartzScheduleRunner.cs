@@ -133,6 +133,8 @@ namespace Scheduler.Quartz
 
             var trigger = triggerBuilder.Build();
 
+            _logger.LogInformation(
+                $"Job \"{typeof(T).Name}\" will be scheduled with this settings: intervalInSeconds={intervalInSeconds}, isRepeatForever={isRepeatForever}, needStartNow={needStartNow}");
             await ScheduleJob(jobDetail, trigger).ConfigureAwait(false);
         }
     }

@@ -35,7 +35,7 @@ namespace Scheduler.Quartz.Abstract
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, $"[{jobId}] {jobName} - job finished with error");
+                    Logger.LogError(ex, $"[{jobId}] {jobName} - job finished with error: ");
                 }
             });
         }
