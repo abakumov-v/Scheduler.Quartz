@@ -19,6 +19,7 @@ Quartz.NET scheduler
 1. Install appropriate IOC-container - all possible IOC-container are listed [here](../readme.md)
 2. Install packages:
     1. `Scheduler.Quartz`
+    2. `Scheduler.Quartz.Ioc.ServiceProvider`
     2. `Quartz.Plugings` - only if your Quartz configured from *.xml file ("file configured scheduler")
 2. In your `Startup` class add the Quartz scheduler:
     ```csharp
