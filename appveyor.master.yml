@@ -61,7 +61,7 @@ deploy:
    draft: true
    prerelease: true # TODO: (version_suffix != string.empty) ? true : false
    auth_token:
-     secure: cXU/5uMu5hDP4h2I7NTHUQ4qaDY67P9hDwNVe2hwEijidAJXQe6zX1f1CInMYOcV
+     secure: KCV2UhcdD/jHSYJCdVzg4ylbwl/ibp/7nGwrU6b8nKqOwCvOLqm1fWyklsDZ14bZ
    on:
      branch: master                # release from master branch only
      #appveyor_repo_tag: true       # deploy on tag push only 
