@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Globalization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Quartz;
@@ -6,45 +8,92 @@ using Quartz.Spi;
 
 namespace Scheduler.Quartz.Ioc.ServiceProvider
 {
-    public class ServiceProviderQuartzJobFactory : IJobFactory
+    public class ServiceProviderQuartzJobFactory : IJobFactory, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IServiceProvider _serviceProvider;
 
-        public ServiceProviderQuartzJobFactory(ILogger<ServiceProviderQuartzJobFactory> logger,
+        internal ConcurrentDictionary<object, JobTrackingInfo> RunningJobs { get; } =
+            new ConcurrentDictionary<object, JobTrackingInfo>();
+
+        public ServiceProviderQuartzJobFactory(
+            ILogger<ServiceProviderQuartzJobFactory> logger,
             IServiceProvider serviceProvider)
         {
-            _logger = logger;
-            _serviceProvider = serviceProvider;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
-        // source: http://tech.trailmax.info/2013/07/quartz-net-in-azure-with-autofac-smoothness/
-        // Just instead Autofac we use .NET Core Ioc container
+        // source: https://github.com/alphacloud/Autofac.Extras.Quartz/blob/v2.1.1/src/Autofac.Extras.Quartz/AutofacJobFactory.cs
         public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
         {
-            Type jobType = null;
+
+            if (bundle == null) throw new ArgumentNullException(nameof(bundle));
+            if (scheduler == null) throw new ArgumentNullException(nameof(scheduler));
+
+            var jobType = bundle.JobDetail.JobType;
+
+            var scope = _serviceProvider.CreateScope();
+
+            IJob newJob;
             try
             {
-                var jobDetail = bundle.JobDetail;
-                jobType = jobDetail.JobType;
+                newJob = (IJob)scope.ServiceProvider.GetRequiredService(jobType);
+                var jobTrackingInfo = new JobTrackingInfo(scope);
+                RunningJobs[newJob] = jobTrackingInfo;
 
-                // resolve job object from DI - populate all services and repositories
-                var job = _serviceProvider.GetRequiredService(jobType);
-
-                return (IJob) job;
+                scope = null;
             }
             catch (Exception ex)
             {
-                var message =
-                    $"Problem instantiating class {(jobType != null ? jobType.Name : "UNKNOWN")} because: {ex.Message}";
-                throw new SchedulerException(message, ex);
+                scope?.Dispose();
+
+                throw new SchedulerConfigException(string.Format(CultureInfo.InvariantCulture,
+                    "Failed to instantiate Job '{0}' of type '{1}'",
+                    bundle.JobDetail.Key, bundle.JobDetail.JobType), ex);
             }
+
+            return newJob;
+        }
+
+        public void Dispose()
+        {
+            RunningJobs.Clear();
         }
 
         public void ReturnJob(IJob job)
         {
-            // source: http://tech.trailmax.info/2013/07/quartz-net-in-azure-with-autofac-smoothness/
-            // do nothing here. Don't really care. Quartz.Net SimpleJobFactory does not have anything here.
+            if (job == null)
+                return;
+
+            if (!RunningJobs.TryRemove(job, out var trackingInfo))
+            {
+                _logger.LogWarning("Tracking info for job {HashCode:x} not found", job.GetHashCode());
+                // ReSharper disable once SuspiciousTypeConversion.Global
+                var disposableJob = job as IDisposable;
+                disposableJob?.Dispose();
+            }
+            else
+            {
+                trackingInfo.Scope?.Dispose();
+            }
         }
+
+        #region Job data
+
+        internal sealed class JobTrackingInfo
+        {
+            /// <summary>
+            ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
+            /// </summary>
+            public JobTrackingInfo(IServiceScope scope)
+            {
+                Scope = scope;
+            }
+
+            public IServiceScope Scope { get; }
+        }
+
+        #endregion Job data
     }
 }
